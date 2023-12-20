@@ -1,0 +1,32 @@
+##Database install:
+
+sudo docker-compose -f compose-env.yaml up -d
+
+
+##Check if work in docker:
+
+sudo ufw disable 
+sudo docker run -ti --rm deviceai5554/cats-api:1.0.0
+sudo docker run -ti --rm -p 8080:8080 -e DATASOURCE_HOST=10.0.2.15 deviceai5554/cats-api:1.0.0
+
+
+##Cluster install:
+
+install kubectl
+install kind
+
+sudo kind create cluster --config kind-config.yaml
+
+--Install ingress
+sudo kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+sudo kubectl wait --namespace ingress-nginx --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=90s
+
+sudo kubectl apply -f deployment.yaml
+sudo kubectl apply -f service.yaml
+sudo kubectl apply -f ingress.yaml
+
+##Check if all works:
+sudo kubectl get pod -o wide
+kubectl get pods -l "app=cats-api"
+sudo kubectl get pod -n ingress-nginx
+kubectl logs <pod-name>

@@ -1,0 +1,40 @@
+./gradlew clean build
+docker build . -t deviceai5554/cats-api:1.0.0
+docker login
+docker push deviceai5554/cats-api:1.0.0
+docker run -ti --rm -e DATASOURCE_HOST=192.168.0.151 -p 8181:8080 cats-api
+
+
+kind --version
+c:\kind\kind.exe create cluster --config kind-config.yaml
+kind create cluster --config kind-config.yaml
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+kubectl wait --namespace ingress-nginx --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=90s
+
+kind get clusters
+
+kubectl apply -f deployment.yaml
+kubectl delete deployments --all
+
+kubectl get node
+
+kubectl get pods
+kubectl get pods --watchk
+kubectl get pod -o wide  // more info
+kubectl delete pod
+
+kubectl get pods -l "app=cats-api"
+kubectl get all -n nginx-ingress
+kubectl get svc --all-namespaces
+
+curl -I http://127.0.0.1/spring-admin
+
+kubectl logs <pod-name>
+kubectl port-forward <pod-name> 8899:8080
+
+kubectl get service
+
+
+kubectl describe ingress myapi
+kubectl get ingress myapi
